@@ -1,0 +1,38 @@
+// Загрузка текущего контента для редактирования
+function loadAdmin() {
+    const data = JSON.parse(localStorage.getItem('siteContent'));
+    const editorDiv = document.getElementById('content-editor');
+    editorDiv.innerHTML = '';
+    for (let page in data) {
+        if (page !== 'settings') {
+            let div = document.createElement('div');
+            div.innerHTML = `<h3>${page}</h3><textarea id="${page}">${data[page].html}</textarea>`;
+            editorDiv.appendChild(div);
+        }
+    }
+    // загружаем email
+    const email = data.settings?.contactEmail || '';
+    document.getElementById('adminEmail').value = email;
+}
+
+function saveAllContent() {
+    const newData = JSON.parse(localStorage.getItem('siteContent'));
+    for (let page in newData) {
+        if (page !== 'settings') {
+            newData[page].html = document.getElementById(page).value;
+        }
+    }
+    localStorage.setItem('siteContent', JSON.stringify(newData));
+    alert('Контент сохранён');
+}
+
+function saveEmail() {
+    const newEmail = document.getElementById('adminEmail').value;
+    let data = JSON.parse(localStorage.getItem('siteContent'));
+    if (!data.settings) data.settings = {};
+    data.settings.contactEmail = newEmail;
+    localStorage.setItem('siteContent', JSON.stringify(data));
+    alert('Email сохранён');
+}
+
+loadAdmin();
