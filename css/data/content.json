@@ -1,0 +1,6 @@
+{
+    "index": { "html": "<h1>Главная страница</h1><p>Привет, мир</p>" },
+    "catalog": { "html": "<h2>Каталог</h2><div class='catalog-items'>...</div>" },
+    "product": { "html": "<h2>Товар</h2><p>Описание товара</p>" },
+    "settings": { "contactEmail": "admin@example.com" }
+}
