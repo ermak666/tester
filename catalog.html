@@ -3,10 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Каталог</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        nav a { margin-right: 15px; }
+        .product { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    </style>
 </head>
 <body>
-    <div id="catalog-container"></div>
-    <script src="js/main.js"></script>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="catalog.html">Каталог</a>
+        <a href="product.html">Товар</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="admin.html">Админка</a>
+    </nav>
+    <h1>Каталог товаров</h1>
+    <div class="product">
+        <h3>Товар 1</h3>
+        <p>Описание товара 1</p>
+    </div>
+    <div class="product">
+        <h3>Товар 2</h3>
+        <p>Описание товара 2</p>
+    </div>
 </body>
 </html>
