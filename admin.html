@@ -3,18 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Админка</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        nav a { margin-right: 15px; }
+        input, button { padding: 8px; margin: 5px; }
+        .box { border: 1px solid #ccc; padding: 20px; margin-top: 20px; max-width: 500px; }
+    </style>
 </head>
 <body>
-    <h1>Редактирование контента</h1>
-    <div>
-        <label>Email для формы:</label>
-        <input type="email" id="adminEmail" />
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="catalog.html">Каталог</a>
+        <a href="product.html">Товар</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="admin.html">Админка</a>
+    </nav>
+    <h1>Панель администратора</h1>
+    
+    <div class="box">
+        <h2>Смена email для формы обратной связи</h2>
+        <p>Текущий email: <strong id="currentEmail">загрузка...</strong></p>
+        <input type="email" id="newEmail" placeholder="Новый email" style="width: 250px;">
         <button onclick="saveEmail()">Сохранить email</button>
+        <p id="saveMessage" style="color: green;"></p>
     </div>
-    <hr />
-    <div id="content-editor"></div>
-    <button onclick="saveAllContent()">Сохранить всё</button>
-    <script src="js/admin.js"></script>
+
+    <div class="box">
+        <h2>Редактирование текста на главной</h2>
+        <textarea id="mainText" rows="4" cols="50"></textarea><br>
+        <button onclick="saveMainText()">Сохранить текст главной</button>
+    </div>
+
+    <script>
+        // Загрузка сохранённых данных
+        function loadData() {
+            // Email
+            let email = localStorage.getItem('contactEmail');
+            if (!email) email = 'admin@example.com';
+            document.getElementById('currentEmail').innerText = email;
+            
+            // Текст главной
+            let mainText = localStorage.getItem('mainText');
+            if (!mainText) mainText = 'Добро пожаловать! Это текст по умолчанию.';
+            document.getElementById('mainText').value = mainText;
+            
+            // Обновляем главную страницу, если она открыта
+            if (window.opener) {
+                try {
+                    window.opener.updateMainText(mainText);
+                } catch(e) {}
+            }
+        }
+        
+        function saveEmail() {
+            const newEmail = document.getElementById('newEmail').value;
+            if (newEmail) {
+                localStorage.setItem('contactEmail', newEmail);
+                document.getElementById('currentEmail').innerText = newEmail;
+                document.getElementById('saveMessage').innerHTML = '✅ Email сохранён!';
+                setTimeout(() => {
+                    document.getElementById('saveMessage').innerHTML = '';
+                }, 2000);
+                document.getElementById('newEmail').value = '';
+            }
+        }
+        
+        function saveMainText() {
+            const newText = document.getElementById('mainText').value;
+            localStorage.setItem('mainText', newText);
+            document.getElementById('saveMessage').innerHTML = '✅ Текст главной сохранён!';
+            setTimeout(() => {
+                document.getElementById('saveMessage').innerHTML = '';
+            }, 2000);
+        }
+        
+        loadData();
+    </script>
 </body>
 </html>
